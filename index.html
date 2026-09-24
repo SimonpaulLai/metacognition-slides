@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>html{color-scheme:light dark}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>後設認知與批判思考</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#EDEFF0; --sheet:#FAFBFB; --ink:#151A1E; --ink-2:#4A5862; --ink-3:#85939B;
+  --rule:#D2D8DB; --rule-soft:#E3E7E9; --mark:#B62B36; --mark-soft:#B62B360D;
+  --qual:#2F5670; --qual-soft:#2F56700D;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1215; --sheet:#171D21; --ink:#E7ECEE; --ink-2:#A6B4BC; --ink-3:#74838B;
+    --rule:#2B363D; --rule-soft:#212A30; --mark:#F4757F; --mark-soft:#F4757F12;
+    --qual:#8FB6D0; --qual-soft:#8FB6D012;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1215; --sheet:#171D21; --ink:#E7ECEE; --ink-2:#A6B4BC; --ink-3:#74838B;
+  --rule:#2B363D; --rule-soft:#212A30; --mark:#F4757F; --mark-soft:#F4757F12;
+  --qual:#8FB6D0; --qual-soft:#8FB6D012;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stage{position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));
+  container-type:size;background:var(--sheet);overflow:hidden}
+.slide{position:absolute;inset:0;padding:8.4cqw 7.5cqw 7cqw;
+  display:flex;flex-direction:column;justify-content:center;gap:2.2cqw}
+.slide.dense{padding-top:8cqw;gap:1.6cqw}
+
+h1,h2{font-family:"Noto Serif TC","Songti TC",Georgia,serif;margin:0;text-wrap:balance}
+h1{font-size:5.4cqw;font-weight:700;line-height:1.2;letter-spacing:-.01em}
+h2{font-size:3.85cqw;font-weight:600;line-height:1.32}
+.dense h2{font-size:3.3cqw}
+p{margin:0}
+.sub{font-size:1.9cqw;line-height:1.72;color:var(--ink-2);max-width:50ch}
+.dense .sub{font-size:1.65cqw}
+.tiny{font-size:1.3cqw;line-height:1.7;color:var(--ink-3)}
+.kicker{font-size:1.8cqw;line-height:1.7;font-weight:500}
+strong{font-weight:700}
+.hl{color:var(--mark)}
+code{font-family:"IBM Plex Mono",ui-monospace,monospace;color:var(--mark);font-size:.93em}
+.lead{border-left:.28cqw solid var(--mark);padding-left:1.8cqw}
+
+.rail{position:absolute;top:4.2cqw;left:7.5cqw;right:7.5cqw;display:flex;
+  justify-content:space-between;align-items:baseline;
+  font-family:"IBM Plex Mono",monospace;font-size:1.22cqw;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--rule-soft);padding-bottom:1.1cqw}
+.rail .tag{color:var(--mark);letter-spacing:.2em}
+.foot{position:absolute;bottom:3.2cqw;left:7.5cqw;right:7.5cqw;display:flex;
+  justify-content:space-between;align-items:center;font-family:"IBM Plex Mono",monospace;
+  font-size:1.18cqw;letter-spacing:.14em;color:var(--ink-3);pointer-events:none}
+
+ul.pts{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:1.15cqw}
+ul.pts li{display:grid;grid-template-columns:auto 1fr;gap:1.1cqw;font-size:1.8cqw;line-height:1.6}
+ul.pts li::before{content:"—";color:var(--mark);font-family:"IBM Plex Mono",monospace}
+.dense ul.pts li{font-size:1.6cqw}
+
+.deflist{display:flex;flex-direction:column;gap:1.2cqw}
+.deflist>div{display:grid;grid-template-columns:8cqw 1fr;gap:1.8cqw;align-items:baseline}
+.deflist .k{font-family:"IBM Plex Mono",monospace;font-size:1.26cqw;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3)}
+.deflist .v{font-size:1.72cqw;line-height:1.62}
+
+.group{display:grid;grid-template-columns:1fr 1fr;gap:2.6cqw}
+.group section{display:flex;flex-direction:column;gap:1.05cqw}
+.group h3{margin:0;font-family:"IBM Plex Mono",monospace;font-size:1.3cqw;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mark);padding-bottom:.65cqw;border-bottom:1px solid var(--rule);font-weight:500}
+.group .nm{font-size:1.58cqw;font-weight:500;line-height:1.45}
+.group .ex{font-size:1.36cqw;color:var(--ink-2);line-height:1.6}
+.group .ex::before{content:"「"}.group .ex::after{content:"」"}
+.group .item{display:flex;flex-direction:column;gap:.3cqw}
+
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:1.15fr 1fr;gap:2.4cqw;padding:1.55cqw 0;
+  border-top:1px solid var(--rule-soft);align-items:baseline}
+.row:first-child{border-top:1px solid var(--rule)}
+.row .k{font-size:1.72cqw;line-height:1.5;font-weight:500}
+.row .k em{font-style:normal;display:block;font-weight:400;font-size:1.36cqw;color:var(--ink-2);margin-top:.3cqw}
+.row .v{font-family:"IBM Plex Mono",monospace;font-size:1.38cqw;line-height:1.62;color:var(--mark)}
+
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:2.6cqw}
+.pair>div{border-left:.28cqw solid var(--mark);padding:.3cqw 0 .3cqw 1.8cqw;
+  display:flex;flex-direction:column;gap:.75cqw}
+.pair .big{font-size:1.95cqw;font-weight:700;line-height:1.4;font-family:"Noto Serif TC",Georgia,serif}
+.pair .d{font-size:1.4cqw;color:var(--ink-2);line-height:1.62}
+.pair.q>div{border-left-color:var(--qual)}
+.pair.q .big{color:var(--qual)}
+
+.trio{display:grid;grid-template-columns:repeat(3,1fr)}
+.trio>div{padding:0 2.1cqw;border-left:1px solid var(--rule)}
+.trio>div:first-child{padding-left:0;border-left:none}
+.trio .en{font-family:"IBM Plex Mono",monospace;font-size:1.45cqw;color:var(--qual);line-height:1.5}
+.trio .zh{font-size:2.2cqw;font-weight:700;line-height:1.35;margin-top:.75cqw;font-family:"Noto Serif TC",Georgia,serif}
+.trio .d{font-size:1.3cqw;color:var(--ink-2);line-height:1.6;margin-top:.75cqw}
+
+table{border-collapse:collapse;width:100%;font-size:1.42cqw}
+th,td{text-align:left;vertical-align:top;padding:.85cqw 1.4cqw .85cqw 0;border-bottom:1px solid var(--rule-soft)}
+th{font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:1.1cqw;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+td.m{font-family:"IBM Plex Mono",monospace;color:var(--mark);white-space:nowrap;font-size:1.32cqw}
+tr:last-child td{border-bottom:none}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--rule)}
+.steps>div{padding:1.5cqw 1.6cqw;border-left:1px solid var(--rule-soft)}
+.steps>div:first-child{padding-left:0;border-left:none}
+.steps .n{font-family:"IBM Plex Mono",monospace;font-size:1.15cqw;color:var(--mark);letter-spacing:.15em}
+.steps .h{font-size:1.62cqw;font-weight:700;margin-top:.55cqw;line-height:1.35}
+.steps .d{font-size:1.28cqw;color:var(--ink-2);line-height:1.6;margin-top:.6cqw}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--rule)}
+.cmp>div{padding:1.7cqw 2.1cqw;border-left:1px solid var(--rule-soft)}
+.cmp>div:first-child{padding-left:0;border-left:none}
+.cmp h3{margin:0 0 1cqw;font-family:"IBM Plex Mono",monospace;font-size:1.26cqw;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.cmp>div.yes h3{color:var(--qual)}.cmp>div.no h3{color:var(--mark)}
+.cmp li{font-size:1.5cqw;line-height:1.7;margin-bottom:.5cqw}
+.cmp ul{margin:0;padding-left:1.3em}
+
+.chain{display:grid;grid-template-columns:1fr auto 1fr;gap:2.4cqw;align-items:center}
+.chain .bx{border:1px solid var(--rule);padding:2cqw 2.2cqw;display:flex;flex-direction:column;gap:.8cqw}
+.chain .bx .y{font-family:"IBM Plex Mono",monospace;font-size:1.3cqw;color:var(--mark);letter-spacing:.13em}
+.chain .bx .t{font-size:1.75cqw;line-height:1.55;font-weight:500}
+.chain .bx .d{font-size:1.32cqw;color:var(--ink-2);line-height:1.6}
+.chain .ar{font-family:"IBM Plex Mono",monospace;font-size:2.4cqw;color:var(--mark)}
+
+.refs{display:flex;flex-direction:column;gap:1.15cqw}
+.refs>div{display:grid;grid-template-columns:9cqw 1fr;gap:1.6cqw;align-items:baseline}
+.refs .v{font-family:"IBM Plex Mono",monospace;font-size:1.15cqw;color:var(--mark);
+  letter-spacing:.1em;text-transform:uppercase}
+.refs .t{font-size:1.52cqw;line-height:1.55}
+.refs .t em{font-style:normal;display:block;color:var(--ink-3);font-size:1.28cqw;margin-top:.25cqw}
+
+#notes{position:absolute;left:0;right:0;bottom:0;background:var(--ink);color:var(--sheet);
+  padding:1.9cqw 7.5cqw;font-size:1.4cqw;line-height:1.75}
+#notes b{color:var(--mark);font-weight:500;font-family:"IBM Plex Mono",monospace;
+  letter-spacing:.12em;font-size:1.12cqw;display:block;margin-bottom:.5cqw;text-transform:uppercase}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- 01 -->
+<section class="slide">
+  <div class="rail"><span>論文報告 · 2026.09.24</span><span class="tag">00</span></div>
+  <h1>後設認知與<br>批判思考</h1>
+  <p class="sub">兩篇 CHI 論文。同一批作者、同一條研究線：<strong>2024 提出框架，2025 用資料驗證。</strong></p>
+  <div class="refs" style="margin-top:1.4cqw">
+    <div><span class="v">CHI 2024</span><span class="t">The Metacognitive Demands and Opportunities of Generative AI<em>Tankelevitch, Kewenig, Scott, Simkute, Sarkar, Rintel, Sellen · Microsoft Research</em></span></div>
+    <div><span class="v">CHI 2025</span><span class="t">The Impact of Generative AI on Critical Thinking<em>Lee, Sarkar, Tankelevitch, Drosos, Rintel, Banks, Wilson · CMU + Microsoft Research</em></span></div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="slide">
+  <div class="rail"><span>論文一 · CHI 2024</span><span class="tag">01</span></div>
+  <h2>這是一篇什麼論文</h2>
+  <div class="deflist">
+    <div><span class="k">類型</span><span class="v"><strong>Position paper</strong>（立場／框架論文）</span></div>
+    <div><span class="k">方法</span><span class="v">文獻綜整。把認知心理學的後設認知理論，與既有的 GenAI 使用者研究對接</span></div>
+    <div><span class="k">資料</span><span class="v"><strong>無新資料。</strong>沒有實驗、沒有受試者。引用他人研究中的觀察與使用者引述作為例證</span></div>
+    <div><span class="k">產出</span><span class="v">一個解釋框架 ＋ 兩條設計方向</span></div>
+  </div>
+  <p class="kicker lead">要點：它不是在證明什麼，是在提出一個<strong>看待問題的方式</strong>。</p>
+</section>
+
+<!-- 03 -->
+<section class="slide">
+  <div class="rail"><span>論文一 · 問題意識</span><span class="tag">02</span></div>
+  <h2>它想解決什麼</h2>
+  <ul class="pts">
+    <li>GenAI 有一堆已知的難用之處：prompt 難寫、輸出難評估、工作流難調整</li>
+    <li>但這些問題各自被研究，<strong>缺一個共同的、有認知理論基礎的解釋</strong></li>
+    <li>作者主張：它們其實是同一件事的不同面向</li>
+    <li>而 HCI 過去談 metacognition，幾乎只出現在資工教育領域</li>
+  </ul>
+  <p class="kicker lead">主張：GenAI 難用不是介面問題，是它要求使用者做大量的<span class="hl">後設認知</span>工作。</p>
+</section>
+
+<!-- 04 -->
+<section class="slide dense">
+  <div class="rail"><span>論文一 · 核心概念</span><span class="tag">03</span></div>
+  <h2>Metacognition ＝ 監控與調控自己的思考</h2>
+  <div class="group">
+    <section>
+      <h3>Monitoring 監控 · 評估自己的思考</h3>
+      <div class="item"><span class="nm"><code>self-awareness</code> 自我覺察</span><span class="ex">我這封信到底想傳達什麼？</span></div>
+      <div class="item"><span class="nm"><code>confidence</code> 信心</span><span class="ex">我有多確定我寫得出對的語氣？</span></div>
+    </section>
+    <section>
+      <h3>Control 調控 · 引導自己的思考</h3>
+      <div class="item"><span class="nm"><code>metacognitive flexibility</code> 策略彈性</span><span class="ex">正式語氣跟新同事不合，該調整</span></div>
+      <div class="item"><span class="nm"><code>task decomposition</code> 任務拆解</span><span class="ex">先定：我要說明專案狀態並請求回饋</span></div>
+    </section>
+  </div>
+  <p class="tiny">例子取自論文。信心再細分 <code>resolution</code>（能否分辨自己何時判斷得準）與 <code>calibration</code>（整體高估或低估），兩者獨立。</p>
+</section>
+
+<!-- 05 -->
+<section class="slide dense">
+  <div class="rail"><span>論文一 · 主要論點</span><span class="tag">04</span></div>
+  <h2>負擔發生在三個地方</h2>
+  <div class="rows">
+    <div class="row"><span class="k">下 prompt<em>寫不出好 prompt 常常不是語言問題，是還沒想清楚自己要什麼</em></span><span class="v">self-awareness<br>task decomposition</span></div>
+    <div class="row"><span class="k">評估輸出、決定要不要信<em>流暢自信的輸出會抬高你的信心 ── processing fluency</em></span><span class="v">confidence adjustment</span></div>
+    <div class="row"><span class="k">決定什麼交給 AI、怎麼重組流程<em>全篇唯一跨越單次互動的層級</em></span><span class="v">self-awareness<br>metacognitive flexibility</span></div>
+  </div>
+  <p class="kicker lead">負擔沒有消失，是從「執行任務」轉到「監控自己」。</p>
+</section>
+
+<!-- 06 -->
+<section class="slide">
+  <div class="rail"><span>論文一 · 設計方向</span><span class="tag">05</span></div>
+  <h2>它開的兩個藥方，以及自己的反駁</h2>
+  <div class="pair">
+    <div><p class="big">一、加支援</p><p class="d">撐起使用者的後設認知<br><code>planning</code> <code>self-evaluation</code> <code>self-management</code></p></div>
+    <div><p class="big">二、降需求</p><p class="d">讓系統本身不要那麼要求<br><code>explainability</code> <code>customizability</code></p></div>
+  </div>
+  <p class="kicker lead">§4.3 作者自己反駁：<strong>加支援本身會增加認知負荷</strong>，所以支援不能無限加，必須取捨。</p>
+  <p class="tiny">限制：沒有實證、沒有實作、沒有評估。它是一種看待問題的方式，不是被驗證的理論。</p>
+</section>
+
+<!-- 07 -->
+<section class="slide dense">
+  <div class="rail"><span>論文二 · CHI 2025</span><span class="tag">06</span></div>
+  <h2>這是一篇什麼論文：問卷實證</h2>
+  <div class="steps">
+    <div><p class="n">01 招募</p><p class="h">319 人</p><p class="d">經 Prolific 平台，條件為每週至少使用一次 GenAI。收到 333 份、排除 14 份。報酬 £10</p></div>
+    <div><p class="n">02 收集</p><p class="h">936 個例子</p><p class="d">請每人提供<strong>自己真實用過</strong>的工作任務，非假設情境</p></div>
+    <div><p class="n">03 測量</p><p class="h">Bloom 六層</p><p class="d">每個例子逐項問：用了 GenAI 之後，這件事變得更費力還是更不費力</p></div>
+    <div><p class="n">04 分析</p><p class="h">量化＋質性</p><p class="d">混合效應迴歸（Table 4）／開放式回答編碼（Table 5 編碼表）</p></div>
+  </div>
+  <p class="tiny">研究經所屬機構倫理審查通過，受試者均簽署同意書。</p>
+</section>
+
+<!-- 08 -->
+<section class="slide dense">
+  <div class="rail"><span>論文二 · 測量方式</span><span class="tag">07</span></div>
+  <h2>「批判思考」是怎麼被量出來的</h2>
+  <p class="sub">五點量表，編碼 −2 ～ +2，可選 N/A（此活動與該任務無關）。問卷上給受試者看的是<strong>白話版</strong>，不是學術術語。</p>
+  <table>
+    <thead><tr><th>Bloom 層次</th><th>問卷實際的措辭</th></tr></thead>
+    <tbody>
+      <tr><td class="m">Knowledge</td><td>Recall — 記憶事實、術語、基本概念</td></tr>
+      <tr><td class="m">Comprehension</td><td>Organising / translating ideas — 組織、摘要、翻譯、陳述要點</td></tr>
+      <tr><td class="m">Application</td><td>Problem solving — 用既有知識解決新情境的問題</td></tr>
+      <tr><td class="m">Analysis</td><td>Breaking down a problem — 拆解資訊、判斷各部分關係、找證據</td></tr>
+      <tr><td class="m">Synthesis</td><td>Putting together ideas — 把分散元素組成新的整體</td></tr>
+      <tr><td class="m">Evaluation</td><td>Evaluating and quality checking — 依標準判斷資訊與品質</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 09 -->
+<section class="slide">
+  <div class="rail"><span>論文二 · 結果 A（質性編碼）</span><span class="tag">08</span></div>
+  <h2>批判思考沒有減少，是換了形式</h2>
+  <div class="trio">
+    <div><p class="en">information<br>verification</p><p class="zh">查證資訊</p><p class="d">從「自己找答案」→「檢查 AI 給的對不對」</p></div>
+    <div><p class="en">response<br>integration</p><p class="zh">整合回應</p><p class="d">從「自己解問題」→「把輸出接進既有脈絡」</p></div>
+    <div><p class="en">task<br>stewardship</p><p class="zh">任務監管</p><p class="d">從「自己執行」→「監看整件事有無偏離」</p></div>
+  </div>
+  <p class="kicker lead" style="border-color:var(--qual)"><strong>這是質性編碼的結果，不是統計結果。</strong></p>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="rail"><span>論文二 · 結果 B（量化迴歸）</span><span class="tag">09</span></div>
+  <h2>使用者的信心，預測他會不會去檢查</h2>
+  <div class="pair">
+    <div><p class="big">對 GenAI 的信心 ↑<br>→ 批判思考 ↓</p><p class="d">越相信工具，越不檢查</p></div>
+    <div><p class="big">對自身能力的信心 ↑<br>→ 批判思考 ↑</p><p class="d">越相信自己判斷得來，越會去檢查</p></div>
+  </div>
+  <p class="kicker lead">兩者是<strong>獨立</strong>的變數。這是統計結果，與結果 A 來自不同分析。</p>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <div class="rail"><span>論文二 · 限制</span><span class="tag">10</span></div>
+  <h2>限制（論文 §6.3 自陳）</h2>
+  <ul class="pts">
+    <li><strong>自陳資料</strong>：量的是「感知到的費力程度」，不是實際表現或實際思考品質</li>
+    <li>相關性，不是因果</li>
+    <li>樣本偏向熟練使用者（門檻為每週至少使用一次）</li>
+    <li>例子由受試者自選，可能偏向印象深刻的案例</li>
+  </ul>
+</section>
+
+<!-- 12 -->
+<section class="slide dense">
+  <div class="rail"><span>資料集</span><span class="tag">11</span></div>
+  <h2>資料公開到什麼程度</h2>
+  <div class="cmp">
+    <div class="yes">
+      <h3>有公開（在論文裡）</h3>
+      <ul>
+        <li><strong>完整問卷題目</strong> — 附錄 A.1</li>
+        <li><strong>質性編碼表</strong> — Table 5</li>
+        <li>迴歸係數 — Table 4</li>
+        <li>受試者人口統計 — Table 3</li>
+        <li>GenAI 用法分類 — Table 1</li>
+      </ul>
+    </div>
+    <div class="no">
+      <h3>沒有公開</h3>
+      <ul>
+        <li><strong>936 個原始例子</strong>的逐筆資料</li>
+        <li>受試者的開放式文字回答原文</li>
+        <li>論文中<strong>沒有</strong> data availability 聲明，也未提供 OSF／GitHub 連結</li>
+        <li>論文一則完全沒有資料（position paper）</li>
+      </ul>
+    </div>
+  </div>
+  <p class="tiny">推測原因（非論文所述）：受試者提供的是真實工作內容的自由文字，含可識別資訊，倫理程序下不易釋出。<strong>但公開的材料已足以複製這個研究。</strong></p>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+  <div class="rail"><span>兩篇的關係</span><span class="tag">12</span></div>
+  <h2>一個完整的「理論 → 實證」閉環</h2>
+  <div class="chain">
+    <div class="bx">
+      <p class="y">CHI 2024</p>
+      <p class="t">主張：評估輸出需要「校準過的信心」</p>
+      <p class="d">提出框架，但沒有資料</p>
+    </div>
+    <div class="ar">→</div>
+    <div class="bx">
+      <p class="y">CHI 2025</p>
+      <p class="t">證實：信心確實預測了人會不會動腦</p>
+      <p class="d">同一批人，用 319 人的資料回填</p>
+    </div>
+  </div>
+  <p class="kicker lead">共同作者：Tankelevitch、Sarkar、Rintel。兩篇不是各自獨立的論文，是同一條研究線的前後兩步。</p>
+</section>
+
+<!-- 14 -->
+<section class="slide">
+  <div class="rail"><span>補充 · 社群</span><span class="tag">13</span></div>
+  <h2>這不是一條研究線，是一個有社群的領域</h2>
+  <p class="sub"><strong>Tools for Thought</strong> — CHI 2025 辦過一次，CHI 2026 在 Barcelona 再辦。</p>
+  <ul class="pts">
+    <li>組織者含 Tankelevitch、Sarkar、Rintel，以及 Elena Glassman、Aniket Kittur、Srishti Palani 等</li>
+    <li>主題涵蓋後設認知、批判思考、記憶、創造力</li>
+    <li>CHI 2025 場次有綜述論文 <code>arXiv:2508.21036</code>，等同這個領域的地圖</li>
+  </ul>
+  <p class="kicker lead">意義：這是找 related work 的捷徑，也是 workshop paper 的投稿目標。</p>
+</section>
+
+<!-- 15 -->
+<section class="slide dense">
+  <div class="rail"><span>補充 · 相關題目</span><span class="tag">14</span></div>
+  <h2>延伸出來的幾條線</h2>
+  <div class="refs">
+    <div><span class="v">arXiv 2605.29442</span><span class="t">How Coding Agents Fail Their Users<em>兩萬多筆真實 session 的開發者與 agent 失準分析</em></span></div>
+    <div><span class="v">CACM 2024</span><span class="t">AI Should Challenge, Not Obey<em>Sarkar。主張 AI 應為 provocateur，批評你的工作而非替你完成</em></span></div>
+    <div><span class="v">arXiv 2310.01297</span><span class="t">Co-audit: tools to help humans double-check AI-generated content<em>同一團隊。幫人檢查 AI 輸出的工具類別</em></span></div>
+    <div><span class="v">CHI 2026 W</span><span class="t">From Binary Groundedness to Support Relations<em>Sarkar 等。從「內容有無根據」轉向「讀者能否理解」</em></span></div>
+  </div>
+  <p class="tiny">以上只讀過摘要，尚未精讀。</p>
+</section>
+
+<!-- 16 -->
+<section class="slide">
+  <div class="rail"><span>小結</span><span class="tag">15</span></div>
+  <h2>三句話</h2>
+  <ul class="pts">
+    <li>AI 沒有減少認知負擔，它把負擔從「動手做」換成「<strong>監控自己在想什麼</strong>」</li>
+    <li>批判思考沒有消失，而是轉向<strong>查證、整合、監管</strong>三件事</li>
+    <li>決定人會不會去檢查的，是<strong>信心</strong>——越信工具越不查，越信自己越會查</li>
+  </ul>
+</section>
+
+<div class="foot">
+  <span style="opacity:.7">← → 換頁 · N 備忘 · F 全螢幕</span>
+  <span id="counter">01 / 16</span>
+</div>
+<div id="notes" hidden></div>
+</div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var counter=document.getElementById('counter'),notesEl=document.getElementById('notes');
+  var stage=document.getElementById('stage'),i=0,show=false;
+  var notes=[
+    "今天報兩篇 CHI 論文。它們其實是同一批人做的，2024 那篇提框架，2025 那篇拿資料驗證，所以我把它們當一條線來報。",
+    "先說第一篇是什麼類型。它是 position paper，沒有做實驗、沒有受試者、沒有新資料。它的動作是把心理學理論搬過來解釋 GenAI 的問題。這點很重要，等下講限制會再提。",
+    "它的問題意識是：GenAI 有一堆難用的地方，但缺一個有認知理論基礎的統一解釋。它主張難用不是介面問題，是後設認知的問題。",
+    "後設認知簡單講就是監控跟調控自己的思考。論文用寫 email 舉例，四個能力都有對應的例子。下面那行的 resolution 跟 calibration 是信心的兩個面向，是獨立的——你可能整體判斷很準，但分不出哪次準哪次不準。",
+    "然後它把四個能力對到三個使用情境。我覺得最有價值的是第一條：寫不出好 prompt 常常不是語言能力問題，是你自己還沒想清楚。第二條的 processing fluency 也很關鍵——讀起來順就感覺可信。",
+    "它給兩條設計路線。但它自己在 4.3 節反駁自己，說加支援本身會增加認知負荷，所以不能無限加。限制是它完全沒有實作也沒有評估。",
+    "第二篇是問卷實證。三百多人、九百多個例子，重點是請受試者提供自己真實用過的例子，不是假設情境。經過倫理審查、有簽同意書。",
+    "這張是它怎麼量批判思考。用 Bloom 的六個層次，但給受試者看的是白話版不是術語。可以選 N/A 這個設計也很重要。",
+    "結果 A 是批判思考換了形式，轉向查證、整合、監管。要強調這是質性編碼的結果，不是統計跑出來的。",
+    "結果 B 是信心。越相信 AI 越不檢查，越相信自己越會檢查。這個才是量化迴歸的結果。兩個發現來自不同分析，不要混在一起講。",
+    "限制是論文自己寫的。最關鍵的是它量的是感知到的費力程度，不是實際表現。而且是相關性不是因果。",
+    "資料的部分我查了一下。原始的九百多筆例子沒有公開，論文裡也沒有 data availability 聲明，沒有 OSF 或 GitHub 連結。但完整問卷在附錄 A.1，編碼表在 Table 5，所以要複製這個研究是做得到的。下面那行原因是我自己推測的，論文沒有說。",
+    "兩篇合起來看就是一個理論到實證的閉環。2024 說評估輸出需要校準過的信心，2025 就去證明信心確實預測了人會不會動腦。共同作者有三個人。",
+    "補充一下，我發現這批人有辦一個 workshop 叫 Tools for Thought，CHI 2026 還會再辦。這對找 related work 很有用。",
+    "這幾篇是我順著找到的相關題目，不過我只讀了摘要還沒精讀，想之後再報。",
+    "總結就是這三句。"
+  ];
+  function render(){
+    slides.forEach(function(s,n){s.hidden=(n!==i);});
+    counter.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    notesEl.hidden=!show;
+    if(show) notesEl.innerHTML='<b>備忘 '+(i+1)+'</b>'+notes[i];
+  }
+  function go(d){i=Math.min(slides.length-1,Math.max(0,i+d));render();}
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1);}
+    else if(e.key==='Home'){i=0;render();}
+    else if(e.key==='End'){i=slides.length-1;render();}
+    else if(e.key==='n'||e.key==='N'){show=!show;render();}
+    else if(e.key==='f'||e.key==='F'){
+      if(document.fullscreenElement)document.exitFullscreen();
+      else if(stage.requestFullscreen)stage.requestFullscreen();}
+  });
+  stage.addEventListener('click',function(e){
+    if(e.clientX<window.innerWidth*0.28)go(-1);else go(1);});
+  render();
+})();
+</script>
+
+</body>
+</html>
